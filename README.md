@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 3. Run the script:
 
-python google_search_scraper.py
+python main.py (rename this if using it as a CrewAI tool)
 
 
 4. The script will search Google for each keyword using proxies and save the search results in JSON format. The JSON files will be saved in a directory named `<excel_file_name>_keyword_research`.
