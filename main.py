@@ -2,6 +2,7 @@ import os
 import time
 import pandas as pd
 import requests
+import json  # Import JSON module for processing JSON data
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -48,8 +49,14 @@ def save_search_results(keyword, search_results, directory):
     keyword_directory = os.path.join(directory, keyword)
     os.makedirs(keyword_directory, exist_ok=True)
 
-    with open(os.path.join(keyword_directory, f"{keyword}_search_results.html"), 'w', encoding='utf-8') as file:
-        file.write(search_results)
+    # Convert JSON string to Python dictionary
+    search_results_dict = json.loads(search_results)
+
+    # Save search results as JSON with indentation for readability
+    with open(os.path.join(keyword_directory, f"{keyword}_search_results.json"), 'w', encoding='utf-8') as file:
+        json.dump(search_results_dict, file, indent=4)
+
+    print(f"Search results for '{keyword}' saved in JSON format.")
 
 def main():
     # Load environment variables
@@ -75,7 +82,6 @@ def main():
         # Save search results if available
         if search_results:
             save_search_results(keyword, search_results, save_directory)
-            print(f"Search results for '{keyword}' saved.")
         else:
             print(f"Failed to fetch search results for '{keyword}'.")
 
